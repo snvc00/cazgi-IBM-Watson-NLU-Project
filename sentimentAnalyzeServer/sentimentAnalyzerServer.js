@@ -38,7 +38,13 @@ app.get("/url/emotion", async (req,res) => {
         url: req.query.url
     });
 
-    return res.send({"emotion": response.result.emotion.document.emotion});
+    const emotions = Object.keys(response.result.emotion.document.emotion).map((emotion, i) => ({
+        label: emotion,
+        score: response.result.emotion.document.emotion[emotion]
+    }));
+
+
+    return res.send(emotions);
 });
 
 app.get("/url/sentiment", async (req,res) => {
